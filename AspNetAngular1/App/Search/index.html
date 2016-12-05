@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-12">
+        <div style="font-weight: bold; font-size: larger;" ng-show="intervalID">
+            <span>Seconds Before Auto Search Enabled: </span>
+            <span ng-show="countDown >= 6" class="label label-info">{{ countDown }}</span>
+            <span ng-show="countDown >= 4 && countDown <= 5" class="label label-warning">{{ countDown }}</span>
+            <span ng-show="countDown <= 3" class="label label-danger">{{ countDown }}</span>
+            
+        </div>
+
+        <br />
+
+        <form name="searchUser" ng-submit="search(username)">
+            <input type="search" placeholder="Username" ng-model="username" autofocus />
+            <input type="submit" value="Search">
+        </form>
+
+    </div>
+</div>

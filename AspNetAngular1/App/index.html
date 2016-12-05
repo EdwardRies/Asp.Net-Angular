@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="MyAngularApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Content/themes/base/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/Content/ui-bootstrap-csp.css" />
+    <link rel="stylesheet" href="/Content/tether/tether.min.css" />
+    <link rel="stylesheet" href="/Content/Site.css">
+
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="/Scripts/tether/tether.min.js"></script>
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/angular-ui/ui-bootstrap.min.js"></script>
+
+    <script src="/App/App.js"></script>
+    <script src="/App/Error/ErrorController.js"></script>
+
+    <script src="/App/Services/GitHubService.js"></script>
+    <script src="/App/Services/ProductsService.js"></script>
+
+    <script src="/App/Search/SearchController.js"></script>
+    <script src="/App/Search/UserController.js"></script>
+       
+    <script src="/App/Product/ProductController.js"></script>
+    <script src="/App/Product/ProductListController.js"></script>    
+</head>
+
+<body style="background-color: moccasin;">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/" class="btn btn-success">Return To Home</a>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="container panel" style="background-color: burlywood; padding: 20px 10px 20px 10px; min-height: 400px; min-width: 480px;">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div ng-view></div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+﻿<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Product Management - Add Product</h1>
+        </div>
+    </div>
+
+    <br />
+
+    <div ng-show="error">
+        <div class="alert alert-danger alert-dismissible">{{ error }}</div>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn btn-success" ng-click="GotoProduct()">Return To Products</div>
+            <br /><br />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form name="AddProductForm" ng-submit="AddProductSubmit()">
+                <div><input type="text" id="ProductName" ng-model="Product.ProductName" placeholder="Product Name" /></div>
+                <div><input type="number" min="0" max="999" id="Quantity" ng-model="Product.Quantity" placeholder="Enter Quantity" /></div>
+                <br />
+                <div><input type="submit" id="submit" value="Save" /></div>
+            </form>
+        </div>
+    </div>
+
+</div>
