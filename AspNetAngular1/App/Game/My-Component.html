@@ -1,0 +1,41 @@
+﻿<div class="row" ng-show="vm.Error">
+    <div class="col-md-12">
+        <h1 class="alert alert-danger alert-dismissible">{{ vm.Error }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <fieldset style="border: 1px solid black; background-color: chocolate; padding: 5px;">
+            {{ vm.Cell.Description }}<br />
+        </fieldset>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center"><button ng-click="vm.Move('North')" class="btn" ng-class="{true:'btn-success', false:'btn-danger'}[vm.Cell.CanGoNorth]" ng-disabled="!vm.Cell.CanGoNorth">North</button></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="col-md-8">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="col-md-6 text-right"><button ng-click="vm.Move('West')" class="btn" ng-class="{true:'btn-success', false:'btn-danger'}[vm.Cell.CanGoWest]" ng-disabled="!vm.Cell.CanGoWest">West</button></div>
+        <div class="col-md-6 text-left"><button ng-click="vm.Move('East')" class="btn" ng-class="{true:'btn-success', false:'btn-danger'}[vm.Cell.CanGoEast]" ng-disabled="!vm.Cell.CanGoEast">East</button></div>
+    </div>
+    <div class="col-md-8"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center"><button ng-click="vm.Move('South')" class="btn" ng-class="{true:'btn-success', false:'btn-danger'}[vm.Cell.CanGoSouth]" ng-disabled="!vm.Cell.CanGoSouth">South</button></div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="col-md-8"></div>
+</div>

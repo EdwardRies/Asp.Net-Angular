@@ -2,7 +2,6 @@
 using AspNetAngular1.Data.Repository.Interfaces;
 using AspNetAngular1.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,30 +24,32 @@ namespace AspNetAngular1.Controllers
         }
 
         // GET: api/Product
-        public IEnumerable<ProductDTO> Get()
+        public IHttpActionResult Get()
         {
-            return this.productRepository.GetProducts().OrderBy(o => o.ProductName);
+            var productDTOs = this.productRepository.GetProducts().OrderBy(o => o.ProductName);
+
+            return Content(HttpStatusCode.OK, productDTOs);
         }
 
-        // GET: api/Product/Apple
+        // GET: api/Product/{Guid}
         public ProductDTO Get(Guid Id)
         {
-            return this.productRepository.GetProduct(Id);
+            return this.productRepository
+                .GetProduct(Id);
         }
-        
-        public IHttpActionResult Delete(Guid Id)
-        {
-            var deleted = this.productRepository.DeleteProduct(Id);
 
-            return Ok(deleted);
+        public HttpResponseMessage Delete(Guid Id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, 
+                this.productRepository.DeleteProduct(Id));
         }
 
         public IHttpActionResult Post(ProductDTO productDTO)
         {
             var newProductDTO = this.productRepository.AddProduct(productDTO);
 
-            return Content(newProductDTO.ProductGUID != Guid.Empty 
-                ? HttpStatusCode.OK 
+            return Content(newProductDTO.ProductGUID != Guid.Empty
+                ? HttpStatusCode.OK
                 : HttpStatusCode.BadRequest, newProductDTO.ProductGUID);
         }
 
@@ -56,8 +57,8 @@ namespace AspNetAngular1.Controllers
         {
             var updated = this.productRepository.UpdateProduct(productDTO);
 
-            return Content(updated 
-                ? HttpStatusCode.OK 
+            return Content(updated
+                ? HttpStatusCode.OK
                 : HttpStatusCode.BadRequest, updated);
         }
     }

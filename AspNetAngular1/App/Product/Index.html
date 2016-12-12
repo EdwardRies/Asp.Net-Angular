@@ -1,45 +1,27 @@
-﻿<div ng-init="GetProducts()">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Product Management</h1>
+﻿<div ng-controller="ProductController" class="container panel" style="background-color: burlywood; padding: 20px 10px 20px 10px; min-height: 400px; min-width: 480px;">
+    <div ng-init="ProductList()">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Product - {{ Mode }}</h1>
+            </div>
         </div>
-    </div>
 
-    <br />
-
-    <div ng-show="error">
-        <div class="alert alert-danger alert-dismissible">{{ error }}</div>
         <br />
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="btn btn-success" ng-click="AddProductForm()">Add Product</div>
-            <br /><br />
-        </div>        
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table-striped table-bordered table-responsive">
-                <thead>
-                    <tr>
-                        <th width="60">Modify</th>
-                        <th width="200"><div ng-click="sortOrder('ProductName')" class="cursor">Product</div></th>
-                        <th width="100"><div ng-click="sortOrder('Quantity')" class="cursor">Quantity</div></th>
-                        <th width="60">Delete</th>                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="product in products | orderBy:sortColumn">
-                        <td class="text-center"><i ng-click="ModifyProductForm(product.ProductGUID)" class="glyphicon glyphicon-edit cursor"></i></td>
-                        <td>{{ product.ProductName }}</td>
-                        <td class="text-center">{{ product.Quantity }}</td>
-                        <td class="text-center"><i ng-click="DeleteProduct(product.ProductGUID)" class="glyphicon glyphicon-remove cursor"></i></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div ng-show="Error" class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger alert-dismissible">{{ Error }}</div>
+                <br />
+            </div>
         </div>
+
+        <div class="row" ng-show="Mode != 'List'">
+            <div class="col-md-12">
+                <div class="btn btn-success" ng-click="ProductList()">Return To Products</div>
+                <br /><br />
+            </div>
+        </div>
+
+        <div ng-show="Mode=='List'" ng-include="'/App/Product/Includes/ProductList.html'"></div>
     </div>
-    
 </div>
