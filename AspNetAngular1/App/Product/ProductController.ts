@@ -2,92 +2,76 @@
 (function () {
     "use strict";
 
-    var ProductController = function ($scope, $routeParams, $location, ProductsService) {
+    var ProductController = function ($scope, ModalService, ProductsService) {
 
-        $scope.product = {};
+        $scope.Mode = "List";
+        $scope.Product = {};
 
-        $scope.GetProducts = function () {
+        $scope.ProductList = function () {
             ProductsService.GetProducts()
                 .then(function (data) {
-                    $scope.products = data;
+                    $scope.Products = data;
+                    $scope.Error = null;
                 }, onError);
+            $scope.Mode = "List";
+            $scope.modal = ModalService.Close($scope.modal);
         };
 
-        $scope.GetProduct = function (productGUID) {
-            ProductsService.GetProducts(productGUID)
-                .then(function () {
-                    $scope.GetProducts();
-                }, onError);
-        };
-
-        $scope.GotoProduct = function () {
-            $location.path("/product/");
-        };
-
-        $scope.AddProductForm = function () {
-            $location.path("/product/addProduct/");
+        $scope.AddProduct = function () {
+            $scope.Mode = "Add";
+            $scope.Product = {};
+            $scope.modal = ModalService.Open($scope, "Product/Includes/AddProduct.html");
         };
 
         $scope.AddProductSubmit = function () {
             ProductsService.AddProduct($scope.Product)
                 .then(function () {
-                    $scope.GotoProduct();
+                    $scope.ProductList();
                 }, onError);
+            $scope.modal = ModalService.Close($scope.modal);
         };
 
-        $scope.ModifyProduct = function () {
-            var productGUID = $routeParams.productGUID;
+        $scope.ModifyProduct = function (productGUID) {
             ProductsService.GetProduct(productGUID)
                 .then(function (data) {
-                    $scope.product = data;
+                    $scope.Mode = "Modify";
+                    $scope.Product = data;
+                    $scope.modal = ModalService.Open($scope, "Product/Includes/ModifyProduct.html");
                 }, onError);            
         };
 
-        $scope.ModifyProductForm = function (productGUID) { 
-            $scope.productGUID = productGUID;           
-            $location.path("/modifyProduct/" + productGUID);
-        };
-
         $scope.ModifyProductSubmit = function () {
-            ProductsService.UpdateProduct($scope.product)
+            ProductsService.UpdateProduct($scope.Product)
                 .then(function () {
-                    $scope.GotoProduct();
+                    $scope.ProductList();
                 }, onError);
-        };
-
-        $scope.AddProduct = function (product) {
-            ProductsService.AddProduct(product)
-                .then(function () {
-                    $scope.GetProducts();
-                }, onError);
+            $scope.modal = ModalService.Close($scope.modal);
         };
 
         $scope.DeleteProduct = function(productGUID) {
             ProductsService.DeleteProduct(productGUID)
                 .then(function () {
-                    $scope.GetProducts();
+                    $scope.ProductList();
                 }, onError);
         };
         
         var onError = function (reason) {
-            $scope.error = reason;
+            $scope.Error = reason;
         };
 
         var order = "+";
-        $scope.sortColumn = "+ProductName";
-
-        $scope.sortOrder = function (columnName) {
-            if ((order + columnName) == $scope.sortColumn) {
+        $scope.SortColumn = "+ProductName";
+        $scope.SortOrder = function (columnName) {
+            if ((order + columnName) == $scope.SortColumn) {
                 order = order == "+" ? "-" : "+";
             }
 
-            $scope.sortColumn = (order + columnName);
+            $scope.SortColumn = (order + columnName);
         };
         
     };
-
-    var app = angular.module("MyAngularApp");
-
-    app.controller("ProductController", ["$scope", "$routeParams", "$location", "ProductsService", ProductController]);
+    
+    angular.module("MyAngularApp")
+        .controller("ProductController", ["$scope", "ModalService", "ProductsService", ProductController]);
 
 } ());

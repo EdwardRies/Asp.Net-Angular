@@ -1,0 +1,66 @@
+<div ng-controller="UserController" class="container panel" style="background-color: burlywood; padding: 20px 10px 20px 10px; min-height: 400px; min-width: 480px;">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="#/main" class="btn btn-primary">Back to Search</a>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12 clearfix">
+            <img ng-src="{{ user.avatar_url }}" title="{{ user.name }}" style="width: 200px; float: left; padding-right: 10px;">
+            <span>
+                <br />
+                <br />
+                {{ user.name }}<br />
+                {{ user.location}}<br />
+            </span>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <select ng-model="repoSortOrder">
+                <option value="+name">Name (Ascending)</option>
+                <option value="-name">Name (Descending)</option>
+                <option value="+description">Description (Ascending)</option>
+                <option value="-description">Description (Descending)</option>
+                <option value="+language">Language (Ascending)</option>
+                <option value="-language">Language (Descending)</option>
+                <option value="+stargazers_count">Star Gazers (Ascending)</option>
+                <option value="-stargazers_count" Selected>Star Gazers (Descending)</option>
+            </select>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="200">Name</th>
+                        <th width="350">Description</th>
+                        <th width="100">Language</th>
+                        <th width="100">Star Gazers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
+                        <td>{{ repo.name }}</td>
+                        <td><a href="{{repo.html_url}}">{{ repo.description }}</a></td>
+                        <td>{{ repo.language }}</td>
+                        <td>{{ repo.stargazers_count | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+</div>

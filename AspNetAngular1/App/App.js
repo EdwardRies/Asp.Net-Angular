@@ -1,32 +1,29 @@
 var app;
 (function (app_1) {
-    angular.module("MyAngularApp", ["ngRoute"]);
+    angular.module("MyAngularApp", ["ngRoute", "ui.bootstrap"]);
     var app = angular.module("MyAngularApp");
     app.config(function ($routeProvider) {
         $routeProvider
             .when("/main", {
-            templateUrl: "/app/search/index.html",
-            controller: "SearchController"
+            templateUrl: "GitHub/index.html",
         })
             .when("/user/:username", {
-            templateUrl: "/app/search/user.html",
-            controller: "UserController"
+            templateUrl: "GitHub/user.html",
         })
             .when("/product", {
-            templateUrl: "/app/product/index.html",
-            controller: "ProductController"
+            templateUrl: "product/index.html",
         })
             .when("/product/addProduct", {
-            templateUrl: "/app/product/addProduct.html",
-            controller: "ProductController"
+            templateUrl: "product/addProduct.html",
         })
             .when("/modifyProduct/:productGUID", {
-            templateUrl: "/app/product/modifyProduct.html",
-            controller: "ProductController"
+            templateUrl: "product/modifyProduct.html",
+        })
+            .when("/game", {
+            templateUrl: "game/index.html",
         })
             .when("/error", {
-            templateUrl: "/app/error/index.html",
-            controller: "ErrorController"
+            templateUrl: "error/index.html",
         })
             .otherwise({ redirectTo: "/error" });
     });

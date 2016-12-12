@@ -1,0 +1,23 @@
+﻿<div modal="showModal" close="ProductList()">
+    <form name="AddProductForm">
+        <div class="modal-header">
+            <h4>Add Product</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div>
+                    <label class="control-label">Product Name</label>
+                    <input class="form-control" type="text" id="ProductName" ng-model="Product.ProductName" placeholder="Product Name" />
+                </div>
+                <div>
+                    <label class="control-label">Quantity</label>
+                    <input class="form-control" type="number" min="0" max="999" id="Quantity" ng-model="Product.Quantity" placeholder="Enter Quantity" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" ng-click="AddProductSubmit()">Save</button>
+            <button class="btn" ng-click="ProductList()">Cancel</button>
+        </div>
+    </form>
+</div>        

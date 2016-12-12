@@ -38,3 +38,7 @@ div {
 .cursor:hover {
     cursor: hand; cursor: pointer;
 }
+
+.modal {
+display: block !important;
+}

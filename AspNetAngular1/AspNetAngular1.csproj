@@ -190,12 +190,22 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Core\GameCore.cs" />
+    <Compile Include="Core\IGameCore.cs" />
     <Compile Include="Data\Entity\MyEntity.cs" />
     <Compile Include="Data\Entity\Product.cs" />
     <Compile Include="Data\Repository\Interfaces\IProductRepository.cs" />
     <Compile Include="Data\Repository\ProductRepository.cs" />
+    <Compile Include="Domain\Game\Cell.cs" />
+    <Compile Include="Domain\Game\Objects\GameObject.cs" />
+    <Compile Include="Domain\Game\Objects\Bolder.cs" />
+    <Compile Include="Domain\Game\Objects\LargeRock.cs" />
+    <Compile Include="Domain\Game\Objects\Rock.cs" />
+    <Compile Include="Domain\Game\Players\Player.cs" />
+    <Compile Include="Domain\Game\Players\Warrior.cs" />
     <Compile Include="Domain\ProductDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,25 +220,37 @@
       <DependentUpon>ErrorController.ts</DependentUpon>
     </Content>
     <Content Include="App\Error\index.html" />
-    <Content Include="App\Product\AddProduct.html" />
+    <Content Include="App\Game\GameController.js">
+      <DependentUpon>GameController.ts</DependentUpon>
+    </Content>
+    <Content Include="App\Game\GameService.js">
+      <DependentUpon>GameService.ts</DependentUpon>
+    </Content>
+    <Content Include="App\Game\index.html" />
+    <Content Include="App\Game\My-Component.html" />
+    <Content Include="App\Game\My-Component.js">
+      <DependentUpon>My-Component.ts</DependentUpon>
+    </Content>
+    <Content Include="App\Product\Includes\AddProduct.html" />
     <Content Include="App\Product\Index.html" />
-    <Content Include="App\Product\ModifyProduct.html" />
-    <Content Include="App\Product\productController.js">
+    <Content Include="App\Product\Includes\ModifyProduct.html" />
+    <Content Include="App\Product\ProductController.js">
       <DependentUpon>ProductController.ts</DependentUpon>
     </Content>
-    <Content Include="App\Services\GitHubService.js">
+    <Content Include="App\Product\Includes\ProductList.html" />
+    <Content Include="App\GitHub\GitHubService.js">
       <DependentUpon>GitHubService.ts</DependentUpon>
     </Content>
     <Content Include="App\index.html" />
-    <Content Include="App\Search\index.html" />
-    <Content Include="App\Search\MainController.js">
+    <Content Include="App\GitHub\index.html" />
+    <Content Include="App\GitHub\MainController.js">
       <DependentUpon>SearchController.ts</DependentUpon>
     </Content>
-    <Content Include="App\Search\User.html" />
-    <Content Include="App\Search\UserController.js">
+    <Content Include="App\GitHub\User.html" />
+    <Content Include="App\GitHub\UserController.js">
       <DependentUpon>UserController.ts</DependentUpon>
     </Content>
-    <Content Include="App\Services\ProductsService.js">
+    <Content Include="App\Product\ProductsService.js">
       <DependentUpon>ProductsService.ts</DependentUpon>
     </Content>
     <Content Include="App_Data\Database.mdf" />
@@ -239,14 +261,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\tether\tether-theme-arrows-dark.css" />
-    <Content Include="Content\tether\tether-theme-arrows-dark.min.css" />
-    <Content Include="Content\tether\tether-theme-arrows.css" />
-    <Content Include="Content\tether\tether-theme-arrows.min.css" />
-    <Content Include="Content\tether\tether-theme-basic.css" />
-    <Content Include="Content\tether\tether-theme-basic.min.css" />
-    <Content Include="Content\tether\tether.css" />
-    <Content Include="Content\tether\tether.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -329,6 +343,10 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\errors.json" />
@@ -348,10 +366,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
-    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
@@ -1102,9 +1116,9 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1117,8 +1131,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\tether\tether.js" />
-    <Content Include="Scripts\tether\tether.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1144,11 +1156,15 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\App.ts" />
     <TypeScriptCompile Include="App\Error\ErrorController.ts" />
+    <TypeScriptCompile Include="App\Game\GameController.ts" />
+    <TypeScriptCompile Include="App\Game\GameService.ts" />
+    <TypeScriptCompile Include="App\Game\My-Component.ts" />
     <TypeScriptCompile Include="App\Product\ProductController.ts" />
-    <TypeScriptCompile Include="App\Services\GitHubService.ts" />
-    <TypeScriptCompile Include="App\Search\SearchController.ts" />
-    <TypeScriptCompile Include="App\Search\UserController.ts" />
-    <TypeScriptCompile Include="App\Services\ProductsService.ts" />
+    <TypeScriptCompile Include="App\GitHub\GitHubService.ts" />
+    <TypeScriptCompile Include="App\GitHub\SearchController.ts" />
+    <TypeScriptCompile Include="App\GitHub\UserController.ts" />
+    <TypeScriptCompile Include="App\Shared\Services\ModalService.ts" />
+    <TypeScriptCompile Include="App\Product\ProductsService.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
