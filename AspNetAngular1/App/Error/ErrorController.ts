@@ -1,44 +1,27 @@
-﻿// Angular Controller
-//(function () {
+﻿namespace MyApp {
 
-//    var ErrorController = function ($scope, $routeParams) {
-
-//    };
-
-//    var app = angular.module("MyAngularApp");
-
-//    app.controller("ErrorController", ["$scope", "$routeParams", ErrorController]);
-
-//} ());
-
-module app.Error {
-    interface IErrorControllerInterface {
-        title: string;
-        path: string;
-        hasError: boolean;
+    export interface IErrorController {
         hasErrorFlag(): boolean;
     }
 
-    class ErrorController implements IErrorControllerInterface {
-        title: string;
-        hasError: boolean;
-        path: string;
+    class ErrorController implements IErrorController {
 
         constructor($scope, $location, $routeParams) {
-            this.title = "Error Controller";
-            this.hasError = false;
-            this.path = $routeParams.productGUID;            
+            // this.path = $routeParams.productGUID;
         }
 
+        private hasError: boolean = true;
+
+        static Dependencies = ["$scope", "$location", "$routeParams", ErrorController];
+
         hasErrorFlag(): boolean {
-            return this.hasError;            
+            return this.hasError;
         }
 
     }
+
     angular
         .module("MyAngularApp")
-        .controller("ErrorController", ["$scope", "$location", "$routeParams", ErrorController]);
-}
+        .controller("ErrorController", ErrorController.Dependencies);
 
-//var app2 = angular.module("MyAngularApp");
-//app2.controller("ErrorController", ["$scope", "$routeParams", ErrorController]);
+}

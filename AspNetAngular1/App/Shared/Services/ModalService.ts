@@ -1,32 +1,40 @@
-﻿// Custom Modal Service
-(function () {
+﻿namespace MyApp {
     "use strict";
+    
+    export interface IModalService {
+        Open(scope: angular.IScope, templateUrl: string): angular.ui.bootstrap.IModalServiceInstance;
+        Close(instance: angular.ui.bootstrap.IModalServiceInstance): angular.ui.bootstrap.IModalServiceInstance;
+    }
 
-    var ModalService = function ($log, $uibModal) {
+    export class ModalService implements IModalService
+    {
+        static $inject = ["$log", "$uibModal"];
+        constructor(private $log: angular.ILogService,
+                    private $uibModal: angular.ui.bootstrap.IModalService) { }
 
-        var openModal = function (scope, templateUrl) {
+        static Dependencies = ["$log", "$uibModal", ModalService];
+
+        Open(scope: angular.IScope, templateUrl: string): angular.ui.bootstrap.IModalServiceInstance {
             var options = {
                 templateUrl: templateUrl,
                 scope: scope
             };
 
-            return $uibModal.open(options);
-        };
+            return this.$uibModal.open(options);
+        }
 
-        var closeModal = function (instance) {
+        Close(instance: angular.ui.bootstrap.IModalServiceInstance): angular.ui.bootstrap.IModalServiceInstance {
             if (instance) {
                 instance.close();
             }
 
             return null;
-        };
+        }
 
-        return {
-            Open: openModal,
-            Close: closeModal
-        };
-    };
+    }
 
     angular.module("MyAngularApp")
-        .service("ModalService", ["$log", "$uibModal", ModalService]);
-} ());
+        .service("ModalService", ModalService.Dependencies);
+
+}
+

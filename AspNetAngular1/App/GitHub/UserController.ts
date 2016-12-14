@@ -4,6 +4,7 @@
 
     var UserController = function ($scope, $routeParams, GitHubService) {
 
+
         var onUserComplete = function (data) {
             $scope.user = data;
             GitHubService.GetRepos(data)

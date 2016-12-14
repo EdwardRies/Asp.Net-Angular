@@ -1,66 +1,73 @@
-﻿// Custom Angular Service
-(function () {
+﻿//import { IProduct, Product } from './Product';
+
+namespace MyApp {
     "use strict";
+    
+    export interface IProductsService {
+        GetProducts(): angular.IPromise<Domain.IProduct[]>;
+        GetProduct(productGUID: string): angular.IPromise<Domain.IProduct>;
+        AddProduct(product: Domain.IProduct): angular.IPromise<any>;
+        UpdateProduct(product: Domain.IProduct): angular.IPromise<Domain.IProduct>;
+        DeleteProduct(productGUID: string): angular.IPromise<any>;
+    }
 
-    var ProductsService = function ($http, $log) {
-        var apiProductsUrl = "/api/products/";
+    export class ProductsService implements IProductsService {
 
-        var config = {
+        static $inject = ["$http", "$log"];
+        constructor(private $http: angular.IHttpService,
+            private $log: angular.ILogService) { }
+
+        static Dependencies = ["$http", "$log", ProductsService];
+
+        private apiProductsUrl: string = "/api/products/";
+        private config: any = {
             headers: {                
             }
         }
 
-        var getProducts = function () {
-            $log.info("Http_Get: " + apiProductsUrl);
-            return $http.get(apiProductsUrl, config)
+        public GetProducts() {
+            this.$log.info("Http_Get: " + this.apiProductsUrl);
+            return this.$http.get(this.apiProductsUrl, this.config)
+                .then(response => {
+                    return response.data;
+                });
+        };
+
+        public GetProduct(productGUID: string) {
+            var url = this.apiProductsUrl + productGUID;
+            this.$log.info("Http_Get: " + url);
+            return this.$http.get(url, this.config)
                 .then(function (response) {
                     return response.data;
                 });
         };
 
-        var getProduct = function (productGUID) {
-            var url = apiProductsUrl + productGUID;
-            $log.info("Http_Get: " + url);
-            return $http.get(url, config)
+        public AddProduct(product: Domain.IProduct) {
+            this.$log.info("Http_Post: " + this.apiProductsUrl);
+            return this.$http.post(this.apiProductsUrl, product, this.config)
                 .then(function (response) {
                     return response.data;
                 });
         };
 
-        var addProduct = function (product) {
-            $log.info("Http_Post: " + apiProductsUrl);
-            return $http.post(apiProductsUrl, product, config)
+        public UpdateProduct(product: Domain.IProduct) {
+            this.$log.info("Http_Put: " + this.apiProductsUrl);
+            return this.$http.put(this.apiProductsUrl, product, this.config)
                 .then(function (response) {
                     return response.data;
                 });
         };
 
-        var updateProduct = function (product) {
-            $log.info("Http_Put: " + apiProductsUrl);
-            return $http.put(apiProductsUrl, product, config)
+        public DeleteProduct(productGUID: string) {
+            var url = this.apiProductsUrl + productGUID;
+            this.$log.info("Http_Delete: " + url);
+            return this.$http.delete(url, this.config)
                 .then(function (response) {
                     return response.data;
                 });
         };
-
-        var deleteProduct = function (productGUID) {
-            var url = apiProductsUrl + productGUID;
-            $log.info("Http_Delete: " + url);
-            return $http.delete(url, config)
-                .then(function (response) {
-                    return response.data;
-                });
-        };
-
-        return {
-            GetProducts: getProducts,
-            GetProduct: getProduct,            
-            AddProduct: addProduct,
-            UpdateProduct: updateProduct,
-            DeleteProduct: deleteProduct
-        };
-    };
+    }
 
     angular.module("MyAngularApp")
-        .service("ProductsService", ["$http", "$log", ProductsService]);
-} ());
+        .service("ProductsService", ProductsService.Dependencies);
+}

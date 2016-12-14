@@ -1,64 +1,86 @@
-// Angular Controller
-(function () {
+/// <reference path="../app.ts" />
+var MyApp;
+(function (MyApp) {
     "use strict";
-    var ProductController = function ($scope, ModalService, ProductsService) {
-        $scope.Mode = "List";
-        $scope.Product = {};
-        $scope.ProductList = function () {
-            ProductsService.GetProducts()
+    var ProductController = (function () {
+        function ProductController($scope, ModalService, ProductsService) {
+            this.$scope = $scope;
+            this.ModalService = ModalService;
+            this.ProductsService = ProductsService;
+            this.Mode = MyApp.Mode[MyApp.Mode.Modify];
+            this.order = "+";
+            this.SortColumn = "+ProductName";
+        }
+        ProductController.prototype.ProductList = function () {
+            var _this = this;
+            this.ProductsService.GetProducts()
                 .then(function (data) {
-                $scope.Products = data;
-                $scope.Error = null;
-            }, onError);
-            $scope.Mode = "List";
-            $scope.modal = ModalService.Close($scope.modal);
+                _this.Products = data;
+                _this.Error = null;
+            }, this.onError);
+            this.Mode = "List";
+            this.Modal = this.ModalService.Close(this.Modal);
         };
-        $scope.AddProduct = function () {
-            $scope.Mode = "Add";
-            $scope.Product = {};
-            $scope.modal = ModalService.Open($scope, "Product/Includes/AddProduct.html");
+        ;
+        ProductController.prototype.AddProduct = function () {
+            this.Mode = "Add";
+            this.Product = new MyApp.Domain.Product();
+            this.Modal = this.ModalService.Open(this.$scope, "Product/Includes/AddProduct.html");
         };
-        $scope.AddProductSubmit = function () {
-            ProductsService.AddProduct($scope.Product)
+        ;
+        ProductController.prototype.AddProductSubmit = function () {
+            var _this = this;
+            this.ProductsService.AddProduct(this.Product)
                 .then(function () {
-                $scope.ProductList();
-            }, onError);
-            $scope.modal = ModalService.Close($scope.modal);
+                _this.ProductList();
+            }, this.onError);
+            this.Modal = this.ModalService.Close(this.Modal);
         };
-        $scope.ModifyProduct = function (productGUID) {
-            ProductsService.GetProduct(productGUID)
-                .then(function (data) {
-                $scope.Mode = "Modify";
-                $scope.Product = data;
-                $scope.modal = ModalService.Open($scope, "Product/Includes/ModifyProduct.html");
-            }, onError);
+        ;
+        ProductController.prototype.ModifyProduct = function (productGUID) {
+            this.Mode = "Modify";
+            this.Product = this.Products.filter(function (product) { return product.ProductGUID == productGUID; })[0];
+            this.Modal = this.ModalService.Open(this.$scope, "Product/Includes/ModifyProduct.html");
+            //this.ProductsService.GetProduct(productGUID)
+            //    .then((data) => {
+            //        this.Mode = "Modify";
+            //        this.Product = data;
+            //        this.Modal = this.ModalService.Open(this.$scope, "Product/Includes/ModifyProduct.html");
+            //    }, this.onError);
         };
-        $scope.ModifyProductSubmit = function () {
-            ProductsService.UpdateProduct($scope.Product)
+        ;
+        ProductController.prototype.ModifyProductSubmit = function () {
+            var _this = this;
+            this.ProductsService.UpdateProduct(this.Product)
                 .then(function () {
-                $scope.ProductList();
-            }, onError);
-            $scope.modal = ModalService.Close($scope.modal);
+                _this.ProductList();
+            }, this.onError);
+            this.Modal = this.ModalService.Close(this.Modal);
         };
-        $scope.DeleteProduct = function (productGUID) {
-            ProductsService.DeleteProduct(productGUID)
+        ;
+        ProductController.prototype.DeleteProduct = function (productGUID) {
+            var _this = this;
+            this.ProductsService.DeleteProduct(productGUID)
                 .then(function () {
-                $scope.ProductList();
-            }, onError);
+                _this.ProductList();
+            }, this.onError);
         };
-        var onError = function (reason) {
-            $scope.Error = reason;
+        ;
+        ProductController.prototype.onError = function (reason) {
+            this.Error = reason;
         };
-        var order = "+";
-        $scope.SortColumn = "+ProductName";
-        $scope.SortOrder = function (columnName) {
-            if ((order + columnName) == $scope.SortColumn) {
-                order = order == "+" ? "-" : "+";
+        ProductController.prototype.SortOrder = function (columnName) {
+            if ((this.order + columnName) == this.SortColumn) {
+                this.order = this.order == "+" ? "-" : "+";
             }
-            $scope.SortColumn = (order + columnName);
+            this.SortColumn = (this.order + columnName);
         };
-    };
+        ;
+        ProductController.$inject = ["$scope", "ModalService", "ProductsService"];
+        ProductController.Dependencies = ["$scope", "ModalService", "ProductsService", ProductController];
+        return ProductController;
+    }());
     angular.module("MyAngularApp")
-        .controller("ProductController", ["$scope", "ModalService", "ProductsService", ProductController]);
-}());
+        .controller("ProductController", ProductController.Dependencies);
+})(MyApp || (MyApp = {}));
 //# sourceMappingURL=ProductController.js.map

@@ -1,9 +1,16 @@
-﻿module app {
+﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="Product/ProductsService.ts" />
+/// <reference path="Shared/Services/ModalService.ts" />
+/// <reference path="Product/Product.ts" />
+
+namespace MyApp {
     angular.module("MyAngularApp", ["ngRoute", "ui.bootstrap"]);
 
-    var app = angular.module("MyAngularApp");
-
-    app.config(function ($routeProvider) {
+    function initDebug($compileProvider: angular.ICompileProvider) : void {
+        $compileProvider.debugInfoEnabled(true);
+    }
+    
+    function routeProvider ($routeProvider: angular.route.IRouteProvider): void {
         $routeProvider
             .when("/main", {
                 templateUrl: "GitHub/index.html",
@@ -20,6 +27,9 @@
             .when("/modifyProduct/:productGUID", {
                 templateUrl: "product/modifyProduct.html",
             })
+            .when("/register", {
+                templateUrl: "register/index.html",
+            })
             .when("/game", {
                 templateUrl: "game/index.html",
             })
@@ -27,5 +37,8 @@
                 templateUrl: "error/index.html",
             })
             .otherwise({ redirectTo: "/error" });
-    });
+    }
+
+    angular.module("MyAngularApp")
+        .config(routeProvider);
 }

@@ -207,9 +207,13 @@
     <Compile Include="Domain\Game\Players\Player.cs" />
     <Compile Include="Domain\Game\Players\Warrior.cs" />
     <Compile Include="Domain\ProductDTO.cs" />
+    <Compile Include="Filter\BaseModelActionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\IViewModelBase.cs" />
+    <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +224,6 @@
       <DependentUpon>ErrorController.ts</DependentUpon>
     </Content>
     <Content Include="App\Error\index.html" />
-    <Content Include="App\Game\GameController.js">
-      <DependentUpon>GameController.ts</DependentUpon>
-    </Content>
     <Content Include="App\Game\GameService.js">
       <DependentUpon>GameService.ts</DependentUpon>
     </Content>
@@ -230,6 +231,9 @@
     <Content Include="App\Game\My-Component.html" />
     <Content Include="App\Game\My-Component.js">
       <DependentUpon>My-Component.ts</DependentUpon>
+    </Content>
+    <Content Include="App\GitHub\SearchController.js">
+      <DependentUpon>SearchController.ts</DependentUpon>
     </Content>
     <Content Include="App\Product\Includes\AddProduct.html" />
     <Content Include="App\Product\Index.html" />
@@ -243,15 +247,16 @@
     </Content>
     <Content Include="App\index.html" />
     <Content Include="App\GitHub\index.html" />
-    <Content Include="App\GitHub\MainController.js">
-      <DependentUpon>SearchController.ts</DependentUpon>
-    </Content>
     <Content Include="App\GitHub\User.html" />
     <Content Include="App\GitHub\UserController.js">
       <DependentUpon>UserController.ts</DependentUpon>
     </Content>
     <Content Include="App\Product\ProductsService.js">
       <DependentUpon>ProductsService.ts</DependentUpon>
+    </Content>
+    <Content Include="App\Register\Index.html" />
+    <Content Include="App\Shared\Services\ModalService.js">
+      <DependentUpon>ModalService.ts</DependentUpon>
     </Content>
     <Content Include="App_Data\Database.mdf" />
     <Content Include="App_Data\Database_log.ldf">
@@ -1131,6 +1136,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <None Include="Scripts\typings\tsd.d.ts.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1147,24 +1153,24 @@
     <Content Include="tsconfig.json" />
     <Content Include="Scripts\version.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App\App.ts" />
     <TypeScriptCompile Include="App\Error\ErrorController.ts" />
-    <TypeScriptCompile Include="App\Game\GameController.ts" />
     <TypeScriptCompile Include="App\Game\GameService.ts" />
     <TypeScriptCompile Include="App\Game\My-Component.ts" />
+    <TypeScriptCompile Include="App\GitHub\SearchController.ts" />
+    <TypeScriptCompile Include="App\Product\Modes.ts" />
+    <TypeScriptCompile Include="App\Product\Product.ts" />
     <TypeScriptCompile Include="App\Product\ProductController.ts" />
     <TypeScriptCompile Include="App\GitHub\GitHubService.ts" />
-    <TypeScriptCompile Include="App\GitHub\SearchController.ts" />
     <TypeScriptCompile Include="App\GitHub\UserController.ts" />
     <TypeScriptCompile Include="App\Shared\Services\ModalService.ts" />
     <TypeScriptCompile Include="App\Product\ProductsService.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-ui-bootstrap\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />

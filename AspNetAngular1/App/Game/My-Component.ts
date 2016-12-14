@@ -4,6 +4,7 @@
     var module = angular.module("MyAngularApp");
 
     var myController = function (GameService) {
+
         var vm = this;
         vm.Description = "";
 

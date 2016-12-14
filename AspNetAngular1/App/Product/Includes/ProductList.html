@@ -1,6 +1,6 @@
 ﻿<div class="row">
     <div class="col-md-12">
-        <div class="btn btn-success" ng-click="AddProduct()">Add Product</div>
+        <div class="btn btn-success" ng-click="vm.AddProduct()">Add Product</div>
         <br /><br />
     </div>
 </div>
@@ -12,17 +12,17 @@
                 <thead>
                     <tr>
                         <th width="60" class="text-center">Modify</th>
-                        <th width="200"><div ng-click="sortOrder('ProductName')" class="cursor">Product</div></th>
-                        <th width="100" class="text-center"><div ng-click="sortOrder('Quantity')" class="cursor">Quantity</div></th>
+                        <th width="200"><div ng-click="vm.sortOrder('ProductName')" class="cursor">Product</div></th>
+                        <th width="100" class="text-center"><div ng-click="vm.sortOrder('Quantity')" class="cursor">Quantity</div></th>
                         <th width="60" class="text-center">Delete</th>
                     </tr>
                 </thead>
                 <tbody class="table-hover">
-                    <tr ng-repeat="Product in Products | orderBy:SortColumn">
-                        <td class="text-center"><i ng-click="ModifyProduct(Product.ProductGUID)" class="glyphicon glyphicon-edit cursor"></i></td>
+                    <tr ng-repeat="Product in vm.Products | orderBy:vm.SortColumn">
+                        <td class="text-center"><i ng-click="vm.ModifyProduct(Product.ProductGUID)" class="glyphicon glyphicon-edit cursor"></i></td>
                         <td>{{ Product.ProductName }}</td>
                         <td class="text-center">{{ Product.Quantity }}</td>
-                        <td class="text-center"><i ng-click="DeleteProduct(Product.ProductGUID)" class="glyphicon glyphicon-remove cursor"></i></td>
+                        <td class="text-center"><i ng-click="vm.DeleteProduct(Product.ProductGUID)" class="glyphicon glyphicon-remove cursor"></i></td>
                     </tr>
                 </tbody>
             </table>

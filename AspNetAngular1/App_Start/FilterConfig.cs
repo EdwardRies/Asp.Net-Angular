@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using AspNetAngular1.Filter;
+using System.Web;
 using System.Web.Mvc;
 
 namespace AspNetAngular1
@@ -8,6 +9,7 @@ namespace AspNetAngular1
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new BaseModelActionFilterAttribute());
         }
     }
 }

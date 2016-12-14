@@ -2,6 +2,7 @@
 (function () {
     "use strict";
 
+
     var SearchController = function ($scope, $interval, $location) {
 
         $scope.search = function (username) {

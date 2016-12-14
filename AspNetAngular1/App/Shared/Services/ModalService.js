@@ -1,26 +1,30 @@
-// Custom Modal Service
-(function () {
+var MyApp;
+(function (MyApp) {
     "use strict";
-    var ModalService = function ($log, $uibModal) {
-        var openModal = function (scope, templateUrl) {
+    var ModalService = (function () {
+        function ModalService($log, $uibModal) {
+            this.$log = $log;
+            this.$uibModal = $uibModal;
+        }
+        ModalService.prototype.Open = function (scope, templateUrl) {
             var options = {
                 templateUrl: templateUrl,
                 scope: scope
             };
-            return $uibModal.open(options);
+            return this.$uibModal.open(options);
         };
-        var closeModal = function (instance) {
+        ModalService.prototype.Close = function (instance) {
             if (instance) {
                 instance.close();
             }
             return null;
         };
-        return {
-            Open: openModal,
-            Close: closeModal
-        };
-    };
+        ModalService.$inject = ["$log", "$uibModal"];
+        ModalService.Dependencies = ["$log", "$uibModal", ModalService];
+        return ModalService;
+    }());
+    MyApp.ModalService = ModalService;
     angular.module("MyAngularApp")
-        .service("ModalService", ["$log", "$uibModal", ModalService]);
-}());
+        .service("ModalService", ModalService.Dependencies);
+})(MyApp || (MyApp = {}));
 //# sourceMappingURL=ModalService.js.map

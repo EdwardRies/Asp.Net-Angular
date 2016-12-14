@@ -3,6 +3,7 @@
     "use strict";
 
     var GitHubService = function ($http, $log) {
+
         var gitHubUsersUrl = "http://api.github.com/users/";
 
         var getUser = function (username) {

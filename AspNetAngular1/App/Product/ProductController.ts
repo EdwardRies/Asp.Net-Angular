@@ -1,77 +1,112 @@
-﻿// Angular Controller
-(function () {
+﻿/// <reference path="../app.ts" />
+
+
+namespace MyApp {
     "use strict";
 
-    var ProductController = function ($scope, ModalService, ProductsService) {
+    export interface IProductScope extends ng.IScope {
+        ProductList: () => void;
+        AddProduct: () => void;
+        AddProductSubmit: () => void;
+        ModifyProduct: (productGUID: string) => void;
+        ModifyProductSubmit: () => void;
+        DeleteProduct: (productGUID: string) => void;       
+        Mode: string;
+        Products: Domain.IProduct[];
+        Product: Domain.IProduct;
+        SortColumn: string;
+        SortOrder: string; 
+        Modal: angular.ui.bootstrap.IModalServiceInstance;
+        Error: string;
+        Dependencies: any[];
+    }
 
-        $scope.Mode = "List";
-        $scope.Product = {};
+    class ProductController {
+        
+        static $inject = ["$scope", "ModalService", "ProductsService"];
+        constructor(private $scope: IProductScope,
+            private ModalService: IModalService,
+            private ProductsService: IProductsService)
+        {
+        }
 
-        $scope.ProductList = function () {
-            ProductsService.GetProducts()
-                .then(function (data) {
-                    $scope.Products = data;
-                    $scope.Error = null;
-                }, onError);
-            $scope.Mode = "List";
-            $scope.modal = ModalService.Close($scope.modal);
+        public static Dependencies:any[] = ["$scope", "ModalService", "ProductsService", ProductController];
+
+        public Mode: string = Mode[MyApp.Mode.Modify];
+        public Product: Domain.IProduct;
+        public Products: Domain.IProduct[];
+        public Modal: angular.ui.bootstrap.IModalServiceInstance;
+        public Error: string;
+        
+        public ProductList():void {
+            this.ProductsService.GetProducts()
+                .then((data) => {
+                    this.Products = data;
+                    this.Error = null;
+                }, this.onError);
+            this.Mode = "List";
+            this.Modal = this.ModalService.Close(this.Modal);
         };
 
-        $scope.AddProduct = function () {
-            $scope.Mode = "Add";
-            $scope.Product = {};
-            $scope.modal = ModalService.Open($scope, "Product/Includes/AddProduct.html");
+        public AddProduct():void {
+            this.Mode = "Add";
+            this.Product = new Domain.Product();
+            this.Modal = this.ModalService.Open(this.$scope, "Product/Includes/AddProduct.html");
         };
 
-        $scope.AddProductSubmit = function () {
-            ProductsService.AddProduct($scope.Product)
-                .then(function () {
-                    $scope.ProductList();
-                }, onError);
-            $scope.modal = ModalService.Close($scope.modal);
+        public AddProductSubmit():void {
+            this.ProductsService.AddProduct(this.Product)
+                .then(() => {
+                    this.ProductList();
+                }, this.onError);
+            this.Modal = this.ModalService.Close(this.Modal);
         };
 
-        $scope.ModifyProduct = function (productGUID) {
-            ProductsService.GetProduct(productGUID)
-                .then(function (data) {
-                    $scope.Mode = "Modify";
-                    $scope.Product = data;
-                    $scope.modal = ModalService.Open($scope, "Product/Includes/ModifyProduct.html");
-                }, onError);            
+        public ModifyProduct(productGUID: string): void {
+            this.Mode = "Modify";
+            this.Product = this.Products.filter(product => product.ProductGUID == productGUID)[0];
+            this.Modal = this.ModalService.Open(this.$scope, "Product/Includes/ModifyProduct.html");
+
+            //this.ProductsService.GetProduct(productGUID)
+            //    .then((data) => {
+            //        this.Mode = "Modify";
+            //        this.Product = data;
+            //        this.Modal = this.ModalService.Open(this.$scope, "Product/Includes/ModifyProduct.html");
+            //    }, this.onError);
         };
 
-        $scope.ModifyProductSubmit = function () {
-            ProductsService.UpdateProduct($scope.Product)
-                .then(function () {
-                    $scope.ProductList();
-                }, onError);
-            $scope.modal = ModalService.Close($scope.modal);
+        public ModifyProductSubmit(): void {
+            this.ProductsService.UpdateProduct(this.Product)
+                .then(() => {
+                    this.ProductList();
+                }, this.onError);
+            this.Modal = this.ModalService.Close(this.Modal);
         };
 
-        $scope.DeleteProduct = function(productGUID) {
-            ProductsService.DeleteProduct(productGUID)
-                .then(function () {
-                    $scope.ProductList();
-                }, onError);
+        public DeleteProduct(productGUID: string): void {
+            this.ProductsService.DeleteProduct(productGUID)
+                .then(() => {
+                    this.ProductList();
+                }, this.onError);
         };
         
-        var onError = function (reason) {
-            $scope.Error = reason;
-        };
-
-        var order = "+";
-        $scope.SortColumn = "+ProductName";
-        $scope.SortOrder = function (columnName) {
-            if ((order + columnName) == $scope.SortColumn) {
-                order = order == "+" ? "-" : "+";
+        private onError(reason) {
+            this.Error = reason;
+        }
+        
+        private order: string = "+";
+        public SortColumn: string = "+ProductName";
+        public SortOrder(columnName: string): void {
+            if ((this.order + columnName) == this.SortColumn) {
+                this.order = this.order == "+" ? "-" : "+";
             }
 
-            $scope.SortColumn = (order + columnName);
+            this.SortColumn = (this.order + columnName);
         };
-        
-    };
-    
-    angular.module("MyAngularApp")
-        .controller("ProductController", ["$scope", "ModalService", "ProductsService", ProductController]);
 
-} ());
+    }
+
+    angular.module("MyAngularApp")
+        .controller("ProductController", ProductController.Dependencies);
+
+}

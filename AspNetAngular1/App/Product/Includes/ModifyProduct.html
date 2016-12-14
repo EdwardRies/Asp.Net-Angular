@@ -1,15 +1,15 @@
-﻿<div modal="showModal" close="ProductList()">
+﻿<div modal="showModal" close="vm.ProductList()">
     <form name="ModifyProductForm">
         <div class="modal-header">
             <h4>Modify Product</h4>
         </div>
         <div class="modal-body">
-            <div><input type="text" id="ProductName" ng-model="Product.ProductName" placeholder="Product Name" /></div>
-            <div><input type="number" min="0" max="999" id="Quantity" ng-model="Product.Quantity" placeholder="Enter Quantity" /></div>
+            <div><input type="text" id="ProductName" ng-model="vm.Product.ProductName" placeholder="Product Name" /></div>
+            <div><input type="number" min="0" max="999" id="Quantity" ng-model="vm.Product.Quantity" placeholder="Enter Quantity" /></div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-success" ng-click="ModifyProductSubmit()">Save</button>
-            <button class="btn" ng-click="ProductList()">Cancel</button>
+            <button class="btn btn-success" ng-click="vm.ModifyProductSubmit()">Save</button>
+            <button class="btn" ng-click="vm.ProductList()">Cancel</button>
         </div>
     </form>
 </div>  

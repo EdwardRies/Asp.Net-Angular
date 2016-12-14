@@ -1,27 +1,27 @@
-﻿<div ng-controller="ProductController" class="container panel" style="background-color: burlywood; padding: 20px 10px 20px 10px; min-height: 400px; min-width: 480px;">
-    <div ng-init="ProductList()">
+﻿<div ng-controller="ProductController as vm" class="container panel" style="background-color: burlywood; padding: 20px 10px 20px 10px; min-height: 400px; min-width: 480px;">
+    <div ng-init="vm.ProductList()">
         <div class="row">
             <div class="col-md-12">
-                <h1>Product - {{ Mode }}</h1>
+                <h1>Product - {{ vm.Mode }}</h1>
             </div>
         </div>
 
         <br />
 
-        <div ng-show="Error" class="row">
+        <div ng-show="vm.Error" class="row">
             <div class="col-md-12">
-                <div class="alert alert-danger alert-dismissible">{{ Error }}</div>
+                <div class="alert alert-danger alert-dismissible">{{ vm.Error }}</div>
                 <br />
             </div>
         </div>
 
-        <div class="row" ng-show="Mode != 'List'">
+        <div class="row" ng-show="vm.Mode != 'List'">
             <div class="col-md-12">
-                <div class="btn btn-success" ng-click="ProductList()">Return To Products</div>
+                <div class="btn btn-success" ng-click="vm.ProductList()">Return To Products</div>
                 <br /><br />
             </div>
         </div>
 
-        <div ng-show="Mode=='List'" ng-include="'/App/Product/Includes/ProductList.html'"></div>
+        <div ng-show="vm.Mode=='List'" ng-include="'/App/Product/Includes/ProductList.html'"></div>
     </div>
 </div>

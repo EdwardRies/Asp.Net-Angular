@@ -3,6 +3,7 @@
     "use strict";
 
     var GameService = function ($window, $http, $log) {
+
         var apiProductsUrl = "/api/game/";
         var config = {
             headers: {

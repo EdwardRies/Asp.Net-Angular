@@ -1,4 +1,4 @@
-﻿<div modal="showModal" close="ProductList()">
+﻿<div modal="showModal" close="vm.ProductList()">
     <form name="AddProductForm">
         <div class="modal-header">
             <h4>Add Product</h4>
@@ -7,17 +7,17 @@
             <div class="form-group">
                 <div>
                     <label class="control-label">Product Name</label>
-                    <input class="form-control" type="text" id="ProductName" ng-model="Product.ProductName" placeholder="Product Name" />
+                    <input class="form-control" type="text" id="ProductName" ng-model="vm.Product.ProductName" placeholder="Product Name" />
                 </div>
                 <div>
                     <label class="control-label">Quantity</label>
-                    <input class="form-control" type="number" min="0" max="999" id="Quantity" ng-model="Product.Quantity" placeholder="Enter Quantity" />
+                    <input class="form-control" type="number" min="0" max="999" id="Quantity" ng-model="vm.Product.Quantity" placeholder="Enter Quantity" />
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-success" ng-click="AddProductSubmit()">Save</button>
-            <button class="btn" ng-click="ProductList()">Cancel</button>
+            <button class="btn btn-success" ng-click="vm.AddProductSubmit()">Save</button>
+            <button class="btn" ng-click="vm.ProductList()">Cancel</button>
         </div>
     </form>
 </div>        
